@@ -5,6 +5,8 @@ const statusEl = document.getElementById("status");
 const listEl = document.getElementById("list");
 const detailEl = document.getElementById("detail");
 
+const randomButton = document.getElementById("randomizer");
+
 //All the shows live in the array once they load
 //Search filters THIS array, so searching costs zero network request
 
@@ -36,9 +38,38 @@ async function getJson(path) {
 //Create a function to pull all show
 async function getShows(id) {
     const data = await getJson("/shows?page=0");
-    console.log(data);
-    console.log(toCard(data[id]));
+   // console.log(data);
+    const show = toCard(data[id])
+   // console.log(show); 
+    
+   
+   
+   
+   const name = document.createElement("li"); 
+     const ident = document.createElement("li"); 
+      const genres = document.createElement("li"); 
+       const year = document.createElement("li"); 
+       const picture = document.createElement("img"); 
+
+        picture.src = show.image; 
+   // console.log(sprite); 
+    picture.width = 160;
+    picture.height = 120; 
+    picture.alt = `${picture.name}`; 
+
+       name.textContent = show.name; 
+       ident.textContent = show.id; 
+       genres.textContent = show.genres; 
+        year.textContent = show.year; 
+       listEl.replaceChildren(); 
+        listEl.appendChild(name); 
+        listEl.appendChild(ident);
+        listEl.appendChild(picture);  
+        listEl.appendChild(genres); 
+        listEl.appendChild(year); 
+    //return show;
 }
+
 
 //Create a function to pull only one show
 
@@ -68,4 +99,35 @@ function toCard(raw) {
 }
 
 // getOneShow(1); 
-getShows(0);
+
+function randomShow() {
+    let ranId = Math.floor(Math.random() * 240) + 1;
+    console.log(ranId); 
+    getShows(ranId);
+    //console.log(ranShow); 
+    //outPut(ranShow); 
+}
+
+function outPut(show){
+  
+    console.log("hi"); 
+    const name = document.createElement("li"); 
+     const id = document.createElement("li"); 
+      const genres = document.createElement("li"); 
+       const year = document.createElement("li"); 
+
+       name.textContent = show.name; 
+       id.textContent = show.id; 
+       genres.textContent = show.genres; 
+        year.textContent = show.year; 
+       
+        listEl.appendChild(name); 
+        listEl.appendChild(id); 
+        listEl.appendChild(genres); 
+        listEl.appendChild(year); 
+        
+}
+
+//-------listeners--------
+
+randomButton.addEventListener("click", randomShow)
